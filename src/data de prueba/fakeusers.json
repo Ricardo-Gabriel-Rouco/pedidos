@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "createdAt": "2023-06-17T00:53:55.185Z",
+    "deletedAt": null,
+    "updatedAt": "2023-06-17T00:53:55.185Z",
+    "firstName": "gabriel",
+    "password": "1234",
+    "role": "Admin"
+  },
+  {
+    "id": 2,
+    "createdAt": "2023-06-17T00:55:06.772Z",
+    "deletedAt": null,
+    "updatedAt": "2023-06-17T00:55:06.772Z",
+    "firstName": "agus",
+    "password": "1234",
+    "role": "User"
+  },
+  {
+    "id": 3,
+    "createdAt": "2023-06-17T00:55:12.429Z",
+    "deletedAt": null,
+    "updatedAt": "2023-06-17T00:55:12.429Z",
+    "firstName": "Ludmi",
+    "password": "1234",
+    "role": "User"
+  },
+  {
+    "id": 4,
+    "createdAt": "2023-06-17T00:55:16.256Z",
+    "deletedAt": null,
+    "updatedAt": "2023-06-17T00:55:16.256Z",
+    "firstName": "Celia",
+    "password": "1234",
+    "role": "User"
+  }
+]

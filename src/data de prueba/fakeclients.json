@@ -1,0 +1,18 @@
+[
+  {
+    "firstName": "Jose",
+    "secondName": "Seis",
+    "lastName": "Dedos",
+    "phone": "21345",
+    "email": "jose6dedos@dedos.com",
+    "socials": "mano"
+  },
+  {
+    "firstName": "Mariano",
+    "secondName": "laRoca",
+    "lastName": "johnson",
+    "phone": "21345",
+    "email": "piedrapapel@tijera.com",
+    "socials": "el cascote"
+  }
+]
