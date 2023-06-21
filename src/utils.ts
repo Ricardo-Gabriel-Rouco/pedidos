@@ -1,68 +1,12 @@
-import {newUser, roles, newCostumer, Costumer, newOrder, stateOrder, noticesType} from "./types";
-// parsers
-const parseName = (nameFromRequest: any): string => {
-  if(!isString(nameFromRequest)){
-    throw new Error('Incorrect or missing comment')
-  }
-  return nameFromRequest
-}
-
-const parsePassword = (passFromRequest: any): string => {
-  if(!isString(passFromRequest)){
-    throw new Error('Incorrect or missing comment')
-  }
-  return passFromRequest
-}
-
-const parseNumber = (value: any): number => {
-  const parsedValue = Number(value);
-  if (isNaN(parsedValue)) {
-    throw new Error('Invalid or missing number');
-  }
-  return parsedValue;
-}
-
-const parseRole = (roleFromRequest: any): roles => {
-  if(!isString(roleFromRequest) || !isRole(roleFromRequest)){
-    throw new Error('Incorrect role')
-  }
-  return roleFromRequest
-}
-
-const parseState = (stateFromRequest: any): stateOrder => {
-  if (!stateFromRequest || typeof stateFromRequest !== 'string' || !(stateFromRequest in stateOrder)) {
-    throw new Error('Invalid or missing state');
-  }
-  return stateFromRequest as stateOrder;
-};
-
-const parseNotice = (noticeFromRequest: any): noticesType => {
-  if (!noticeFromRequest || typeof noticeFromRequest !== 'string' || !(noticeFromRequest in noticesType)) {
-    throw new Error('Invalid or missing notice');
-  }
-  return noticeFromRequest as noticesType;
-};
-
-// validators
-const isRole = (param: any): boolean => {
-  return Object.values(roles).includes(param)
-}
-
-const isValidState = (param: any): boolean =>{
-  return Object.values(stateOrder).includes(param)
-}
-
-const isValidNotice = (param: any): boolean => {
-  return Object.values(noticesType).includes(param)
-}
-
-const isString = (string: string): boolean => {
-  return typeof string === 'string'
-}
-
-const isNumber = (param: number): boolean => {
-  return typeof param === 'number'
-}
+import { newUser, newCostumer, Costumer, newOrder, roles } from "./types";
+import {
+  parseName,
+  parsePassword,
+  parseNumber,
+  parseRole,
+  parseNotice,
+  parseState,
+} from "./parsers";
 
 export const toNewUser = (object: any): Partial<newUser> => {
   const toAddUser: Partial<newUser> = {};
@@ -76,7 +20,12 @@ export const toNewUser = (object: any): Partial<newUser> => {
   }
 
   if (object.role) {
-    toAddUser.role = parseRole(object.role);
+    const parsedRole = parseRole(object.role)
+    if (parsedRole) {
+      toAddUser.role = parsedRole
+    } else {
+      toAddUser.role = roles.User
+    }
   }
 
   return toAddUser;
@@ -90,9 +39,9 @@ export const toNewCostumer = (object: any): newCostumer => {
     phone: parseName(object.phone),
     email: parseName(object.email),
     socials: parseName(object.socials),
-  }
-  return newCostumer
-}
+  };
+  return newCostumer;
+};
 
 export const updatedCostumer = (object: any): Partial<Costumer> => {
   const toAddCostumer: Partial<Costumer> = {};
@@ -124,7 +73,11 @@ export const updatedCostumer = (object: any): Partial<Costumer> => {
   return toAddCostumer;
 };
 
-export const toNewOrder = (object: any, userId: any, costumerId: any): newOrder => {
+export const toNewOrder = (
+  object: any,
+  userId: any,
+  costumerId: any
+): newOrder => {
   const newOrder = {
     isbn: parseNumber(object.isbn),
     title: parseName(object.title),
@@ -133,7 +86,7 @@ export const toNewOrder = (object: any, userId: any, costumerId: any): newOrder 
     notice: parseNotice(object.notice),
     comment: parseName(object.comment),
     costumer: parseNumber(costumerId),
-    user: parseNumber(userId)
-  }
-  return newOrder
-}
+    user: parseNumber(userId),
+  };
+  return newOrder;
+};
