@@ -7,8 +7,8 @@ import { Order } from "./entity/Order"
 export const AppDataSource = new DataSource({
     type: "postgres",
     host: "localhost",
-    port: 5433,
-    username: "postgres",
+    port: 5432,
+    username: "darkgallow",
     password: "darkgallow12",
     database: "orders",
     synchronize: true,

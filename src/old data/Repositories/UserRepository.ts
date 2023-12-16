@@ -20,6 +20,17 @@ export const findUsersByName = async (name: string) => {
   return result;
 };
 
+export const logUser = async (userData: any) => {
+  const user = await userRepository.find({
+    where: {
+      firstName: userData.userName,
+      password: userData.password
+    }
+  })
+  if(!user.length) throw new Error("Not found");
+  return user
+}
+
 export const findUsersById = async (id: number) => {
   const result = await userRepository.find({
     where: {

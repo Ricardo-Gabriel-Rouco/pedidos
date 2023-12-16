@@ -1,5 +1,5 @@
 import express from "express";
-import { getUsers } from "../handlers/userHandler";
+import { getUsers } from "../old data/handlers/userHandler";
 import {
   createUser,
   updateUser,
@@ -39,5 +39,17 @@ server.delete("/user/:id", async (req, res) => {
     res.status(400).send("User not found");
   }
 });
+
+server.post("/login", async (req, res) => {
+  try {
+    const { userName, password } = req.body;
+    const user = await getUsers(userName, password);
+    if(user) {
+      res.status(200).send(user);
+    }
+  } catch (error) {
+    res.status(400).send(error);
+  }
+})
 
 export default server;

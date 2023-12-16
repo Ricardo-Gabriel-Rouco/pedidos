@@ -1,6 +1,6 @@
 import express from 'express'
 import { updateCostumer, createCostumer, deleteCostume } from "../Repositories/CostumerRepository";
-import { getCostumers } from '../handlers/costumerHandlers'
+import { getCostumers } from '../old data/handlers/costumerHandlers'
 const server = express.Router() 
 
 server.get('/:idOrName?', getCostumers)
