@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import catchedAsync from "../../../utils/catchedAsync"
 import {
   findAllUsers,
   findUsersById,
@@ -8,7 +9,7 @@ import {
   deleteUser,
 } from "../service/user.service";
 
-export const getUsers = async (req: Request, res:Response) => {
+const getUsers = async (req: Request, res:Response) => {
   const { idOrName } = req.params;
 
   if (!isNaN(Number(idOrName))) {
@@ -47,7 +48,7 @@ export const getUsers = async (req: Request, res:Response) => {
   }
 } 
 
-export const updateUserById = async (req: Request, res: Response) => {
+const updateUserById = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id);
   const newData = req.body;
 
@@ -59,16 +60,16 @@ export const updateUserById = async (req: Request, res: Response) => {
   }
 };
 
-export const createNewUser = async (req, res) => {
+const createNewUser = async (req: Request, res: Response) => {
   try {
     await createUser(req.body);
     res.status(200).send("user Created");
   } catch (error) {
-    res.status(400).send("oops I did it again");
+    res.status(400).send(error);
   }
 };
 
-export const deleteUserById = async (req, res) => {
+const deleteUserById = async (req, res) => {
   try {
     await deleteUser(+req.params.id);
     res.status(200).send("User deleted");
@@ -77,7 +78,7 @@ export const deleteUserById = async (req, res) => {
   }
 };
 
-export const logUSer =  async (req, res) => {
+const logUSer =  async (req, res) => {
   try {
     const { userName, password } = req.body;
     const user = await getUsers(userName, password);
@@ -89,3 +90,6 @@ export const logUSer =  async (req, res) => {
   }
 }
 
+module.exports = {
+  getUsers: catchedAsync(getUsers),
+}

@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import catchedAsync from "../../../utils/catchedAsync"
 import {
   getAllCostumers,
   findCostumerById,
@@ -6,7 +7,8 @@ import {
   updateCostumer, createCostumer, deleteCostume
 } from "../service/costumer.service"
 
-export const getCostumers = async (req: Request, res: Response) => {
+
+const getCostumers = async (req: Request, res: Response) => {
   const { idOrName } = req.params;
 
   if (!isNaN(Number(idOrName))) {
@@ -46,7 +48,7 @@ export const getCostumers = async (req: Request, res: Response) => {
   }
 };
 
-export const updateCostumerById = async(req: Request, res: Response) => {
+const updateCostumerById = async(req: Request, res: Response) => {
   const id = parseInt(req.params.id);
   const newData = req.body;
 
@@ -58,7 +60,7 @@ export const updateCostumerById = async(req: Request, res: Response) => {
   }
 }
 
-export const createNewCostumer = async(req: Request, res:Response) =>{
+const createNewCostumer = async(req: Request, res:Response) =>{
   try {
     const result = await createCostumer(req.body)
     res.status(200).send(result)
@@ -67,11 +69,18 @@ export const createNewCostumer = async(req: Request, res:Response) =>{
   }
 }
 
-export const deleteCostumerById = async(req: Request, res: Response) =>{
+const deleteCostumerById = async(req: Request, res: Response) =>{
   try {
     const result = await deleteCostume(+req.params.id)
     res.status(200).send(result)
   } catch (error) {
     res.status(400).send(error)
   }
+}
+
+module.exports = {
+  getCostumers: catchedAsync(getCostumers),
+  updateCostumerById: catchedAsync(updateCostumerById),
+  createNewCostumer: catchedAsync(createNewCostumer),
+  deleteCostumerById: catchedAsync(deleteCostumerById)
 }

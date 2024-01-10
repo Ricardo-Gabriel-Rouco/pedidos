@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import catchedAsync from "../../../utils/catchedAsync"
 import {
   createOrder,
   getAllOrders,
@@ -8,7 +9,7 @@ import {
 } from "../service/order.service";
 
 
-export const getOrders = async (req: Request, res: Response) => {
+const getOrders = async (req: Request, res: Response) => {
   try {
     const result = await getAllOrders();
     res.status(200).send(result);
@@ -17,7 +18,7 @@ export const getOrders = async (req: Request, res: Response) => {
   }
 }
 
-export const getOrderUsingId = async (req: Request, res: Response) => {
+const getOrderUsingId = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const order = await getOrderById(+id);
@@ -31,7 +32,7 @@ export const getOrderUsingId = async (req: Request, res: Response) => {
   }
 }
 
-export const getOrderByCostumer = async(req: Request, res: Response) => {
+const getOrderByCostumer = async(req: Request, res: Response) => {
   try {
     const {costumerId} = req.params
     const orders = await getOrdersByCustomer(+costumerId)
@@ -42,7 +43,7 @@ export const getOrderByCostumer = async(req: Request, res: Response) => {
   }
 }
 
-export const getOrderByUserId = async (req: Request, res: Response) => {
+const getOrderByUserId = async (req: Request, res: Response) => {
   try {
     const {userId} = req.params
     const orders = await getOrderByUser(+userId)
@@ -53,7 +54,7 @@ export const getOrderByUserId = async (req: Request, res: Response) => {
   }
 }
 
-export const createNewOrder = async (req: Request, res: Response) => {
+const createNewOrder = async (req: Request, res: Response) => {
   try {
     const { userId, costumerId, order } = req.body;
     await createOrder(order, +userId, +costumerId);
@@ -63,3 +64,10 @@ export const createNewOrder = async (req: Request, res: Response) => {
   }
 }
 
+module.exports = {
+  getOrders: catchedAsync(getOrders),
+  getOrderUsingId: catchedAsync(getOrderUsingId),
+  getOrderByCostumer: catchedAsync(getOrderByCostumer),
+  getOrderByUserId: catchedAsync(getOrderByUserId),
+  createNewOrder: catchedAsync(createNewOrder)
+}

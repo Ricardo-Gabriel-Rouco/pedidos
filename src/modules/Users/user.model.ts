@@ -6,11 +6,13 @@ import {
   UpdateDateColumn,
   DeleteDateColumn,
   OneToMany,
+  Unique
 } from "typeorm";
 import { Order } from "../Orders/order.model";
 import { roles } from "../../types";
 
 @Entity()
+@Unique(["firstName"])
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
