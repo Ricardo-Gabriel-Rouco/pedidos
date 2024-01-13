@@ -1,6 +1,6 @@
-import { Costumer } from "../entity/Costumer";
-import { AppDataSource } from "../data-source";
-import { toNewCostumer } from "../utils";
+import { Costumer } from "../costumer.model";
+import { AppDataSource } from "../../../data-source";
+import { toNewCostumer } from "../../../utils";
 
 const costumerRepository = AppDataSource.getRepository(Costumer);
 

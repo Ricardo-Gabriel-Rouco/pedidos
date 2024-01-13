@@ -5,60 +5,52 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
-  ManyToOne,
+  OneToMany
 } from "typeorm";
-import { noticesType, stateOrder } from "../types";
-import { Costumer } from "./Costumer";
-import { User } from "./User";
+
+import { Order } from "../Orders/order.model";
+
 
 @Entity()
-export class Order {
+export class Costumer {
   @PrimaryGeneratedColumn()
   id: number;
-  
-  @Column({
-    type: "int",
-    nullable: true,
-  })
-  isbn: number;
-  
-  @Column({
-    type: "varchar",
-    nullable: false,
-  })
-  title: string;
-
-  @Column({
-    type: "varchar",
-    nullable: true,
-  })
-  url: string;
-  
-  @Column({
-    type: "varchar",
-    nullable: false,
-    enum: stateOrder
-  })
-  state: string;
 
   @Column({
     type: "varchar",
     nullable: false,
-    enum: noticesType
   })
-  notice: string;
+  firstName: string;
   
   @Column({
     type: "varchar",
     nullable: true,
   })
-  comment: string;
+  secondName: string;
   
-  @ManyToOne(()=> Costumer, costumer => costumer.order)
-  costumer: Costumer
+  @Column({
+    type: "varchar",
+    nullable: false,
+  })
+  lastName: string;
   
-  @ManyToOne(()=> User, user => user.orders)
-  user: Order
+  @Column({
+    type: "varchar",
+    nullable: true,
+  })
+  phone: string;
+  
+  @Column({
+    type: "varchar",
+    nullable: true,
+  })
+  email: string;
+  
+  @Column({
+    type: "varchar",
+    nullable: false,
+  })
+  socials: string;
   
   @CreateDateColumn()
   createdAt: Date;
@@ -68,4 +60,8 @@ export class Order {
   
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToMany(() => Order, order => order.costumer)
+  order: Order[]
+
 }

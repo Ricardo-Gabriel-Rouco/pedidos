@@ -1,9 +1,12 @@
 import { Request, Response } from "express";
+import catchedAsync from "../../../utils/catchedAsync"
 import {
   getAllCostumers,
   findCostumerById,
   findCostumerByName,
-} from "../Repositories/CostumerRepository";
+  updateCostumer, createCostumer, deleteCostume
+} from "../service/costumer.service"
+
 
 export const getCostumers = async (req: Request, res: Response) => {
   const { idOrName } = req.params;
@@ -44,3 +47,34 @@ export const getCostumers = async (req: Request, res: Response) => {
     return res.status(400).send(error);
   }
 };
+
+export const updateCostumerById = async(req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
+  const newData = req.body;
+
+  try {
+    const updatedCostumer = await updateCostumer(id, newData);
+    res.json(updatedCostumer);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+export const createNewCostumer = async(req: Request, res:Response) =>{
+  try {
+    const result = await createCostumer(req.body)
+    res.status(200).send(result)
+  } catch (error) {
+    res.status(400).send(error)
+  }
+}
+
+export const deleteCostumerById = async(req: Request, res: Response) =>{
+  try {
+    const result = await deleteCostume(+req.params.id)
+    res.status(200).send(result)
+  } catch (error) {
+    res.status(400).send(error)
+  }
+}
+

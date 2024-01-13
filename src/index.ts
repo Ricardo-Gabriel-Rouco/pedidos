@@ -6,7 +6,7 @@ import app from "./server";
 // import { Costumer } from "./entity/Costumer"
 // import * as customTypes from "./types";
 
-const PORT = 3000;
+const PORT = 4500;
 
 AppDataSource.initialize()
   .then(async () => {

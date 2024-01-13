@@ -6,11 +6,13 @@ import {
   UpdateDateColumn,
   DeleteDateColumn,
   OneToMany,
+  Unique
 } from "typeorm";
-import { Order } from "./Order";
-import { roles } from "../types";
+import { Order } from "../Orders/order.model";
+import { roles } from "../../types";
 
 @Entity()
+@Unique(["firstName"])
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -30,8 +32,18 @@ export class User {
   @Column()
   password: string;
 
-  @Column()
+  @Column({
+    type: "enum",
+    enum: roles,
+    default: roles.User
+  })
   role: roles;
+
+  @Column({
+    default: false
+  })
+  isDeleted: boolean;
+
 
   @OneToMany(() => Order, order => order.user)
   orders: Order[];

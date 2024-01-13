@@ -90,3 +90,34 @@ export const toNewOrder = (
   };
   return newOrder;
 };
+
+export const updatedOrder = (object: any): Partial<newOrder> => {
+  const toAddOrder: Partial<newOrder> = {};
+  
+  if (object.isbn) {
+    toAddOrder.isbn = parseNumber(object.isbn);
+  }
+  
+  if (object.title) {
+    toAddOrder.title = parseName(object.title);
+  }
+
+  if (object.url) {
+    toAddOrder.url = parseName(object.url);
+  }
+
+  if (object.state) {
+    toAddOrder.state = parseState(object.state);
+  }
+
+  if (object.notice) {
+    toAddOrder.notice = parseNotice(object.notice);
+  }
+
+  if (object.comment) {
+    toAddOrder.comment = parseName(object.comment);
+  }
+
+  return toAddOrder;
+
+}
