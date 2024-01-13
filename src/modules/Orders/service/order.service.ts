@@ -3,7 +3,7 @@ import { Costumer } from "../../Costumers/costumer.model";
 import { Order } from "../order.model";
 import { User } from "../../Users/user.model";
 
-import { toNewOrder } from "../../../utils";
+import { toNewOrder, updatedOrder } from "../../../utils";
 
 const orderRepository = AppDataSource.getRepository(Order)
 const costumerRepository = AppDataSource.getRepository(Costumer)
@@ -67,13 +67,76 @@ export const createOrder = async (order: any, userId: number, costumerId: number
     throw new Error('Not found');
   }
 
-  try {
-    const newOrderToSave = toNewOrder(order, userId, costumerId);
-    await orderRepository.save(newOrderToSave);
-  } catch (error) {
-    console.error('Error in toNewOrder:', error);
-    throw error;
+  const newOrderToSave = toNewOrder(order, userId, costumerId);
+  await orderRepository.save(newOrderToSave);
+
+  return newOrderToSave;
+};
+
+export const updateOrder = async (updOrder: any, id:number) => {
+    const newOrderData = updatedOrder(updOrder);
+  
+    const order = await orderRepository.find({
+      where: {
+        id
+      },
+    })
+  
+    if (!order) {
+      throw new Error(`Order with ID ${id} not found`);
+    }
+  
+    if (Object.keys(newOrderData).length === 0) {
+      throw new Error("No valid properties found in newData");
+    }
+
+
+    const newDataOrder = await orderRepository.update(id, newOrderData)
+
+    if (newDataOrder.affected === 1) {
+      // Si se ha actualizado un registro
+      const updatedOrder = await orderRepository.findOne({
+        where: {
+          id
+        },
+      });
+      return updatedOrder;
+      // Aquí, 'updatedOrder' contendría los datos actualizados
+      // Puedes retornar o manejar 'updatedOrder' según tus necesidades
+    } else {
+      // Manejar el caso en el que no se haya actualizado ningún registro
+      throw new Error(`Order with ID ${id} not found`);
+    }
+    
+}
+
+export const deleteOrder = async (id: number) => {
+
+  const order = await orderRepository.find({
+    where: {
+      id
+    }
+  })
+
+  if (!order) {
+    throw new Error(`Order with ID ${id} not found`);
   }
 
-  return order;
-};
+  const deletedOrder = await orderRepository.update(id, {isDeleted: true});
+
+  if (deletedOrder.affected === 1) {
+    // Si se ha actualizado un registro
+    const updatedOrder = await orderRepository.findOne({
+      where: {
+        id
+      },
+    });
+    return updatedOrder;
+    // Aquí, 'updatedOrder' contendría los datos actualizados
+    // Puedes retornar o manejar 'updatedOrder' según tus necesidades
+  } else {
+    // Manejar el caso en el que no se haya actualizado ningún registro
+    throw new Error(`Order with ID ${id} not found`);
+  }
+
+}

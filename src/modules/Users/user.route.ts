@@ -1,8 +1,8 @@
 import {Router} from "express";
+import catchedAsync from "../../utils/catchedAsync"
+
 import {
   getUsers,
-  logUSer,
-  createNewUser,
   deleteUserById,
   updateUserById
 } from "./controller/user.controller"
@@ -10,12 +10,11 @@ const routerUser = Router();
 
 
 // inputs
-routerUser.post('/', createNewUser);
-routerUser.post('/login', logUSer)
-routerUser.put('/:id', updateUserById);
-routerUser.delete('/:id', deleteUserById);
+
+routerUser.put('/:id', catchedAsync(updateUserById));
+routerUser.delete('/:id', catchedAsync(deleteUserById));
 
 // outputs
-routerUser.get("/:idOrName?", getUsers);
+routerUser.get("/:idOrName?", catchedAsync(getUsers));
 
 export default routerUser

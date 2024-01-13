@@ -17,7 +17,7 @@ export class Order {
   id: number;
   
   @Column({
-    type: "int",
+    type: "bigint",
     nullable: true,
   })
   isbn: number;
@@ -53,6 +53,13 @@ export class Order {
     nullable: true,
   })
   comment: string;
+
+  @Column({
+    type: "boolean",
+    nullable: false,
+    default: false
+  })
+  isDeleted: boolean
   
   @ManyToOne(()=> Costumer, costumer => costumer.order)
   costumer: Costumer

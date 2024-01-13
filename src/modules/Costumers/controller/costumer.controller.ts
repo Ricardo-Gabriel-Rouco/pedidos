@@ -8,7 +8,7 @@ import {
 } from "../service/costumer.service"
 
 
-const getCostumers = async (req: Request, res: Response) => {
+export const getCostumers = async (req: Request, res: Response) => {
   const { idOrName } = req.params;
 
   if (!isNaN(Number(idOrName))) {
@@ -48,7 +48,7 @@ const getCostumers = async (req: Request, res: Response) => {
   }
 };
 
-const updateCostumerById = async(req: Request, res: Response) => {
+export const updateCostumerById = async(req: Request, res: Response) => {
   const id = parseInt(req.params.id);
   const newData = req.body;
 
@@ -60,7 +60,7 @@ const updateCostumerById = async(req: Request, res: Response) => {
   }
 }
 
-const createNewCostumer = async(req: Request, res:Response) =>{
+export const createNewCostumer = async(req: Request, res:Response) =>{
   try {
     const result = await createCostumer(req.body)
     res.status(200).send(result)
@@ -69,7 +69,7 @@ const createNewCostumer = async(req: Request, res:Response) =>{
   }
 }
 
-const deleteCostumerById = async(req: Request, res: Response) =>{
+export const deleteCostumerById = async(req: Request, res: Response) =>{
   try {
     const result = await deleteCostume(+req.params.id)
     res.status(200).send(result)
@@ -78,9 +78,3 @@ const deleteCostumerById = async(req: Request, res: Response) =>{
   }
 }
 
-module.exports = {
-  getCostumers: catchedAsync(getCostumers),
-  updateCostumerById: catchedAsync(updateCostumerById),
-  createNewCostumer: catchedAsync(createNewCostumer),
-  deleteCostumerById: catchedAsync(deleteCostumerById)
-}
