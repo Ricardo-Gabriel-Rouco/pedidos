@@ -1,11 +1,13 @@
-import express from 'express'
-import apiRouter from './routes/index'
+import express from 'express';
+import cors from 'cors';
+import apiRouter from './routes/index';
 
-const app = express()
-app.use(express.json())
+const app = express();
 
-app.use('/v1', apiRouter)
+// Configuración de CORS para aceptar todas las peticiones
+app.use(cors());
 
+app.use(express.json());
+app.use('/v1', apiRouter);
 
-
-export default app
+export default app;

@@ -35,16 +35,17 @@ export type newCostumer = Omit<Costumer, 'id'>
 
 // esto es para los pedidos
 export enum stateOrder {
+  Nuevo = "Nuevo",
   Pendiente = "Pendiente",
   Embolsado = "Embolsado",
-  Nd = "Nd",
+  Avisado = "Avisado",
   Retirado = "Retirado",
-  Nvm = "Nvm",
   Desarmar = "Desarmar",
+  Desarmado = "Desarmado",
+  Nd = "Nd",
+  Nvm = "Nvm",
   Nlq = "Nlq",
   BajaNd = "BajaNd",
-  Desarmado = "Desarmado",
-  Nuevo = "Nuevo",
 }
 
 export enum noticesType {
@@ -60,7 +61,9 @@ export interface Order {
   url?: string
   state: stateOrder
   notice?: noticesType
-  comment: string
+  comment: string,
+  modifiedBy?: number;
+  modifiedAt?: Date;
 }
 
 export type newOrder = Omit<Order, 'id'>
