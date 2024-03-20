@@ -9,7 +9,7 @@ export interface User {
   firstName: string;
   password: string;
   role: roles;
-  order?: Order[]
+  order?: Order[];
 }
 
 export interface newUser {
@@ -31,7 +31,7 @@ export interface Costumer {
   order?: Order[];
 }
 
-export type newCostumer = Omit<Costumer, 'id'>
+export type newCostumer = Omit<Costumer, "id">;
 
 // esto es para los pedidos
 export enum stateOrder {
@@ -55,16 +55,23 @@ export enum noticesType {
 }
 
 export interface Order {
-  id: number,
-  isbn?: number,
-  title: string
-  url?: string
-  state: stateOrder
-  notice?: noticesType
-  comment: string,
+  id: number;
+  isbn?: number;
+  title: string;
+  url?: string;
+  state: stateOrder;
+  notice?: noticesType;
+  comment: string;
   modifiedBy?: number;
   modifiedAt?: Date;
 }
 
-export type newOrder = Omit<Order, 'id'>
+export type newOrder = Omit<Order, "id">;
 
+export interface modificationType {
+  id?: number;
+  userId: number;
+  orderId: number;
+  modification: string;
+  modificationDate: Date;
+}

@@ -6,6 +6,7 @@ import routerCostumer from "../modules/Costumers/costumer.route";
 import routerOrder from "../modules/Orders/orders.route";
 import routerUser from "../modules/Users/user.route";
 import routerLogin from "../modules/Login/login.route";
+import routerMod from "../modules/Modifications/Modifications.route";
 
 // usamos las rutas
 apiRouter
@@ -13,5 +14,6 @@ apiRouter
   .use("/order", routerOrder)
   .use("/user", routerUser)
   .use("/login", routerLogin)
+  .use("/mod", routerMod);
 
 export default apiRouter;
